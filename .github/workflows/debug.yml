@@ -23,6 +23,11 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: "r28 beta 1"
+          local-cache: true
+
       - name: Grant Execute Permission For Gradlew
         run: chmod +x gradlew
 
