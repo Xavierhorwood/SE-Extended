@@ -27,6 +27,11 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: "r27c"
+          local-cache: true
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -95,6 +100,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: gradle
+
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: "r27c"
+          local-cache: true
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -165,6 +175,11 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: "r27c"
+          local-cache: true
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -230,6 +245,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: gradle
+
+      - uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: "r27c"
+          local-cache: true
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
