@@ -13,7 +13,7 @@ on:
         default: true
 jobs:
   job_armv8:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -39,30 +39,50 @@ jobs:
       - name: Build
         run: ./gradlew assembleArmv8Release
 
-      - name: Determine the latest Build Tools version installed
-        shell: bash
-        run: echo "BUILD_TOOL_VERSION=$(ls "$ANDROID_HOME/build-tools/" | tail -n 1)" >> $GITHUB_ENV
-
       - name: Sign APK
         id: sign_app
-        uses: SE-Extended/sign-android-release@master
+        uses: tiann/zipalign-sign-android-release@v1.1.4
         with:
           releaseDirectory: app/build/outputs/apk/armv8/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+          zipAlign: true
         env:
-          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      - name: Delete Unsigned APK File
+        run: |
+          cd app/build/outputs/apk/armv8/release/
+          shopt -s extglob
+          rm -rf !(*-signed*)
+
+      - name: Build Version
+        run: ./gradlew getVersion
+
+      - name: Set Environment Variables
+        id: version-env
+        run: |
+          echo "version=$(cat app/build/version.txt)" >> $GITHUB_ENV
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Git Branch Name
+        id: git-branch-name
+        uses: EthanSK/git-branch-name-action@main
+
+      - name: Rename APK File
+        run: |
+          mv app/build/outputs/apk/armv8/release/*.apk app/build/outputs/apk/armv8/release/SE-Extended-${{ env.version }}-ARMV8-${{ steps.version-env.outputs.sha_short }}.apk
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: SE-Extended-ARMV8-Release
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: app/build/outputs/apk/armv8/release/*.apk
 
   job_armv7:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -88,27 +108,47 @@ jobs:
       - name: Build
         run: ./gradlew assembleArmv7Release
 
-      - name: Determine the latest Build Tools version installed
-        shell: bash
-        run: echo "BUILD_TOOL_VERSION=$(ls "$ANDROID_HOME/build-tools/" | tail -n 1)" >> $GITHUB_ENV
-
       - name: Sign APK
         id: sign_app
-        uses: SE-Extended/sign-android-release@master
+        uses: tiann/zipalign-sign-android-release@v1.1.4
         with:
           releaseDirectory: app/build/outputs/apk/armv7/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+          zipAlign: true
         env:
-          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+          BUILD_TOOLS_VERSION: "34.0.0"
 
+      - name: Delete Unsigned APK file
+        run: |
+          cd app/build/outputs/apk/armv7/release/
+          shopt -s extglob
+          rm -rf !(*-signed*)
+
+      - name: Build Version
+        run: ./gradlew getVersion
+
+      - name: Set Environment Variables
+        id: version-env
+        run: |
+          echo "version=$(cat app/build/version.txt)" >> $GITHUB_ENV
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Git Branch Name
+        id: git-branch-name
+        uses: EthanSK/git-branch-name-action@main
+
+      - name: Rename APK File
+        run: |
+          mv app/build/outputs/apk/armv7/release/*.apk app/build/outputs/apk/armv7/release/SE-Extended-${{ env.version }}-ARMV7-${{ steps.version-env.outputs.sha_short }}.apk
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: SE-Extended-ARMV7-Release
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: app/build/outputs/apk/armv7/release/*.apk
 
   job_manager:
     runs-on: ubuntu-latest
@@ -130,28 +170,49 @@ jobs:
 
       - name: Build
         run: ./gradlew manager:assembleRelease
-
-      - name: Determine the latest Build Tools version installed
-        shell: bash
-        run: echo "BUILD_TOOL_VERSION=$(ls "$ANDROID_HOME/build-tools/" | tail -n 1)" >> $GITHUB_ENV
-
+        
       - name: Sign APK
         id: sign_app
-        uses: SE-Extended/sign-android-release@master
+        uses: tiann/zipalign-sign-android-release@v1.1.4
         with:
           releaseDirectory: manager/build/outputs/apk/release/
           signingKeyBase64: ${{ secrets.JAVA_KEYSTORE_DATA }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
+          zipAlign: true
         env:
-          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      - name: Delete Unsigned APK file
+        run: |
+          cd manager/build/outputs/apk/release/
+          shopt -s extglob
+          rm -rf !(*-signed*)
+
+      - name: Build Version
+        run: ./gradlew getVersion
+
+      - name: Set Environment Variables
+        id: version-env
+        run: |
+          echo "version=$(cat app/build/version.txt)" >> $GITHUB_ENV
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Git Branch Name
+        id: git-branch-name
+        uses: EthanSK/git-branch-name-action@main
+
+      - name: Rename APK File
+        run: |
+          mv manager/build/outputs/apk/release/*.apk manager/build/outputs/apk/release/SE-Extended-${{ env.version }}-ARMV7-${{ steps.version-env.outputs.sha_short }}.apk
+
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Manager
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: manager/build/outputs/apk/release/*.apk
 
   job_release:
     runs-on: ubuntu-latest
