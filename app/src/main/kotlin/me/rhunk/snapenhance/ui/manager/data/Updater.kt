@@ -14,7 +14,7 @@ object Updater {
     )
 
     private fun fetchLatestRelease() = runCatching {
-        val endpoint = Request.Builder().url("https://api.github.com/repos/bocajthomas/SE-Extended/releases").build()
+        val endpoint = Request.Builder().url("https://api.github.com/repos/Xavierhorwood/SE-Extended/releases").build()
         val response = OkHttpClient().newCall(endpoint).execute()
 
         if (!response.isSuccessful) throw Throwable("Failed to fetch releases: ${response.code}")
@@ -36,7 +36,7 @@ object Updater {
     }.getOrNull()
 
     private fun fetchLatestDebugCI() = runCatching {
-        val actionRuns = OkHttpClient().newCall(Request.Builder().url("https://api.github.com/repos/bocajthomas/SE-Extended/actions/runs?event=workflow_dispatch").build()).execute().use {
+        val actionRuns = OkHttpClient().newCall(Request.Builder().url("https://api.github.com/repos/Xavierhorwood/SE-Extended/actions/runs?event=workflow_dispatch").build()).execute().use {
             if (!it.isSuccessful) throw Throwable("Failed to fetch CI runs: ${it.code}")
             JsonParser.parseString(it.body.string()).asJsonObject
         }
