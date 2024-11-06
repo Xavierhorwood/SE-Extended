@@ -25,7 +25,7 @@ jobs:
 
       - uses: nttld/setup-ndk@v1
         with:
-          ndk-version: "r28 beta 1"
+          ndk-version: "28.0.12433566"
           local-cache: true
 
       - name: Grant Execute Permission For Gradlew
