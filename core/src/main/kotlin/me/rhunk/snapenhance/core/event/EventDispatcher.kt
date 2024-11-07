@@ -75,7 +75,7 @@ class EventDispatcher(
         }
 
         context.classCache.conversationManager.hook("updateConversationTitle", HookStage.BEFORE) { param ->
-            Toast.makeText(context.androidContext, "Title update " + param.arg(1), Toast.LENGTH_SHORT).show()
+            context.shortToast("Title update " + param.arg(1))
         }
 
         context.classCache.snapManager.hook("onSnapInteraction", HookStage.BEFORE) { param ->
