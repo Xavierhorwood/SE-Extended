@@ -21,7 +21,6 @@ class SnapClassCache (
     val composerView by lazy { findClass("com.snap.composer.views.ComposerView") }
     val composerAction by lazy { findClass("com.snap.composer.actions.ComposerAction") }
     val composerFunctionActionAdapter by lazy { findClass("com.snap.composer.callable.ComposerFunctionActionAdapter") }
-    val updatewallpaper by lazy { findClass("com.snapchat.client.messaging.ConversationManager\$CppProxy") }
 
     private fun findClass(className: String): Class<*> {
         return try {

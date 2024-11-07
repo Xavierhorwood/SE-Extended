@@ -15,7 +15,7 @@ class Wallpaperupdate : Feature("Block Wallpaper Update") {
     override fun init() {
         if (!context.config.userInterface.blockWallpaperUpdate.get()) return
 
-        context.classCache.updatewallpaper.hook("updateChatWallpaper", HookStage.BEFORE) { param ->
+        context.classCache.conversationManager.hook("updateChatWallpaper", HookStage.BEFORE) { param ->
             Toast.makeText(context.androidContext, "Wallpaper update blocked", Toast.LENGTH_SHORT).show()
             param.setResult(null)
         }

@@ -22,6 +22,7 @@ import me.rhunk.snapenhance.core.wrapper.impl.SnapUUID
 import me.rhunk.snapenhance.mapper.impl.CallbackMapper
 import me.rhunk.snapenhance.mapper.impl.ViewBinderMapper
 import java.nio.ByteBuffer
+import android.widget.Toast
 
 class EventDispatcher(
     private val context: ModContext
@@ -71,6 +72,10 @@ class EventDispatcher(
             ).apply { adapter = param }) {
                 postHookEvent()
             }
+        }
+
+        context.classCache.conversationManager.hook("updateConversationTitle", HookStage.BEFORE) { param ->
+            Toast.makeText(context.androidContext, "Title update " + param.arg(1), Toast.LENGTH_SHORT).show()
         }
 
         context.classCache.snapManager.hook("onSnapInteraction", HookStage.BEFORE) { param ->
