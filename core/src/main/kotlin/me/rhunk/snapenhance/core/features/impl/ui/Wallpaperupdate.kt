@@ -9,13 +9,15 @@ import me.rhunk.snapenhance.core.util.hook.hookConstructor
 import me.rhunk.snapenhance.core.util.ktx.getObjectField
 import me.rhunk.snapenhance.core.util.ktx.setObjectField
 import me.rhunk.snapenhance.core.wrapper.impl.SnapUUID
+import android.widget.Toast
 
 class Wallpaperupdate : Feature("Block Wallpaper Update") {
     override fun init() {
         if (!context.config.userInterface.blockWallpaperUpdate.get()) return
 
         context.classCache.updatewallpaper.hook("updateChatWallpaper", HookStage.BEFORE) { param ->
-            return@hook
+            Toast.makeText(context.androidContext, "Wallpaper update blocked", Toast.LENGTH_SHORT).show()
+            param.setResult(null)
         }
     }
 }
