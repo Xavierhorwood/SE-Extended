@@ -137,6 +137,7 @@ class FeatureManager(
             DisableTelecomFramework(),
             BetterTranscript(),
             VoiceNoteOverride(),
+            Wallpaperupdate(),
         )
 
         features.values.toList().forEach { feature ->

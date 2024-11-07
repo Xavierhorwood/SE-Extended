@@ -54,6 +54,7 @@ enum class MessagingRuleType(
     HIDE_FRIEND_FEED("hide_friend_feed", false, Icons.Outlined.VisibilityOff, showInFriendMenu = false),
     E2E_ENCRYPTION("e2e_encryption", false, Icons.Outlined.Lock),
     PIN_CONVERSATION("pin_conversation", false, Icons.Outlined.PushPin, showInFriendMenu = false);
+    WALLPAPERUPDATE("wallpaperupdate", false, Icons.Outlined.Update, showInFriendMenu = false);
 
     fun translateOptionKey(optionKey: String): String {
         return if (listMode) "rules.properties.$key.options.$optionKey" else "rules.properties.$key.name"
