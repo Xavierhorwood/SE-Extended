@@ -555,6 +555,10 @@
                     "edit_text_override": {
                         "name": "Edit Text Override",
                         "description": "Overrides text field behavior"
+                    },
+                    "block_wallpaper_update": {
+                        "name": "Block Wallpaper Update",
+                        "description": "Blocks wallpaper updates"
                     }
                 }
             },

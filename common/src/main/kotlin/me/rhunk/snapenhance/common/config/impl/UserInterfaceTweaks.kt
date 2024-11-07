@@ -100,4 +100,5 @@ class UserInterfaceTweaks : ConfigContainer() {
     val editTextOverride = multiple("edit_text_override", "multi_line_chat_input", "bypass_text_input_limit") {
         requireRestart(); addNotices(FeatureNotice.BAN_RISK, FeatureNotice.INTERNAL_BEHAVIOR)
     }
+    val blockWallpaperUpdate = boolean("block_wallpaper_update") { requireRestart() }
 }

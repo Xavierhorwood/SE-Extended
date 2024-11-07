@@ -13,7 +13,7 @@ import me.rhunk.snapenhance.core.wrapper.impl.SnapUUID
 
 class Wallpaperupdate : MessagingRuleFeature("Wallpaperupdate", MessagingRuleType.WALLPAPERUPDATE) {
     override fun init() {
-        //if (!context.config.messaging.unlimitedConversationPinning.get()) return
+        if (!context.config.userInterface.blockWallpaperUpdate.get()) return
 
         context.classCache.updatewallpaper.hook("updateChatWallpaper", HookStage.BEFORE) { param ->
             return@hook
