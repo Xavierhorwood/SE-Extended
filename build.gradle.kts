@@ -7,8 +7,8 @@ plugins {
     alias(libs.plugins.rust.android) apply false
 }
 
-var versionName = "1.0.1"
-var versionCode = 101
+var versionName = "1.0.2"
+var versionCode = 102
 
 rootProject.ext.set("appVersionName", versionName)
 rootProject.ext.set("appVersionCode", versionCode)
