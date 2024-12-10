@@ -89,7 +89,7 @@ class FriendFeedInfoMenu : AbstractMenu() {
                     BitmojiSelfie.getBitmojiSelfie(
                         profile.bitmojiSelfieId.toString(),
                         profile.bitmojiAvatarId.toString(),
-                        BitmojiSelfie.BitmojiSelfieType.THREE_D
+                        BitmojiSelfie.BitmojiSelfieType.NEW_THREE_D
                     )!!
                 )
             }
@@ -547,7 +547,7 @@ class FriendFeedInfoMenu : AbstractMenu() {
             createComposeView(actionSheetItemsContainer.context) {
                 CompositionLocalProvider(
                     LocalTextStyle provides LocalTextStyle.current.merge(TextStyle(fontFamily = FontFamily(
-                        Font(context.userInterface.getFontResource(600) ?: throw IllegalStateException("Avenir Next font not found"), FontWeight.Medium)
+                        Font(context.userInterface.avenirNextFontId, FontWeight.Medium)
                     )))
                 ) {
                     ComposeFriendFeedMenu()
