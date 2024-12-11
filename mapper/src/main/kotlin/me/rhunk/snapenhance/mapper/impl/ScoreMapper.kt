@@ -15,7 +15,7 @@ class ScoreMapper : AbstractClassMapper("Score"){
                 if (firstConstructor.parameters.size != 5) continue
                 if (firstConstructor.parameterTypes[1] != "str" || firstConstructor.parameterTypes[2] != "str2") continue
 
-                if (clazz.methods.firstOrNull { it.name == "toString" }?.implementation?.findConstString("score", contains = true) != true) continue
+                if (clazz.methods.firstOrNull { it.name == "toString" }?.implementation?.findConstString("Result\\(userId=", contains = true) != true) continue
 
                 classReference.set(clazz.getClassName())
                 return@mapper
