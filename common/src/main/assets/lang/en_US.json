@@ -1146,6 +1146,10 @@
                     "prevent_forced_logout": {
                         "name": "Prevent Forced Logout",
                         "description": "Prevents Snapchat from logging you out when you login on another device"
+                    },
+                    "score_change": {
+                        "name": "Change Score to 5000 WIP",
+                        "description": "WIP"
                     }
                 }
             },
