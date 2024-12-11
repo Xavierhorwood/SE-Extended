@@ -19,7 +19,7 @@ class ScoreMapper : AbstractClassMapper("Score"){
 
                 val toStringMethod = clazz.virtualMethods.firstOrNull { it.name == "toString" }?.implementation ?: continue
                 if (!toStringMethod.let {
-                    it.findConstString("Result\(userId", contains = true) && it.findConstString("score", contains = true)
+                    it.findConstString("Result\\(userId", contains = true) && it.findConstString("score", contains = true)
                 }) continue
 
                 classReference.set(clazz.getClassName())
